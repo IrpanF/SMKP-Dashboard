@@ -81,8 +81,8 @@ class SmkpSeeder extends Seeder
                     'Isi Kebijakan',
                     'Terdapat visi, misi, tujuan',
                     'Komitmen melaksanakan KP',
-                    'Sebagian isi kebujakan diturunkan menjadi program kerja',
-                    'Seluruh isi kebujakan diturunkan menjadi program kerja',
+                    'Sebagian isi kebijakan diturunkan menjadi program kerja',
+                    'Seluruh isi kebijakan diturunkan menjadi program kerja',
                 ],
             ],
 

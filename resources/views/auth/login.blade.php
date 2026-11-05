@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Login - SMKP Dashboard</title>
+    <title>{{ config('app.name', 'Sistem Informasi SMKP') }} - Login</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('logo-utsg.ico') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -32,7 +33,8 @@
                             w-72 h-72 bg-white/10 rounded-full">
                 </div>
 
-                <div class="absolute -bottom-32 -left-24
+                <div
+                    class="absolute -bottom-32 -left-24
                             w-80 h-80 bg-white/10 rounded-full">
                 </div>
 
@@ -176,34 +178,13 @@
 
                     {{-- Header --}}
                     <div class="mb-6">
-
-                        <p
-                            class="text-emerald-600 font-semibold
-                                  text-xs uppercase tracking-wider">
-
-                            Selamat Datang
-
-                        </p>
-
-                        <h2 class="mt-1.5 text-3xl font-bold
-                                   text-slate-800">
-
-                            Masuk ke Sistem
-
-                        </h2>
-
-                        <p class="mt-2 text-sm text-slate-500">
-
+                        <p class="text-emerald-600 font-semibold text-xs uppercase tracking-wider">
                             Silakan masukkan akun Anda untuk melanjutkan.
-
                         </p>
-
                     </div>
-
 
                     {{-- Session Status --}}
                     <x-auth-session-status class="mb-4" :status="session('status')" />
-
 
                     {{-- Form --}}
                     <form method="POST" action="{{ route('login') }}" class="space-y-4">
@@ -211,44 +192,94 @@
                         @csrf
 
 
-                        {{-- Email --}}
+                        {{-- Nomor Karyawan --}}
                         <div>
+                            <x-input-label for="employee_number" value="Nomor Karyawan"
+                                class="text-slate-700 font-semibold text-sm" />
 
-                            <x-input-label for="email" value="Email" class="text-slate-700 font-semibold text-sm" />
+                            <div class="relative mt-1.5">
+                                {{-- Ikon kartu identitas --}}
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <rect x="3" y="5" width="18" height="14" rx="2"
+                                            stroke-width="1.8" />
+                                        <circle cx="8" cy="11" r="2" stroke-width="1.8" />
+                                        <path d="M5.5 16c.5-1.5 1.3-2 2.5-2s2 .5 2.5 2M14 10h4M14 14h4"
+                                            stroke-width="1.8" stroke-linecap="round" />
+                                    </svg>
+                                </div>
 
-                            <x-text-input id="email"
-                                class="block mt-1.5 w-full px-4 py-3
-                                       rounded-xl border-slate-300
-                                       text-base
-                                       focus:border-emerald-500
-                                       focus:ring-emerald-500"
-                                type="email" name="email" :value="old('email')" required autofocus
-                                autocomplete="username" placeholder="Masukkan email Anda" />
+                                <x-text-input id="employee_number"
+                                    class="block w-full !pl-11 pr-4 py-3 rounded-xl
+                                        border-slate-300 text-lg placeholder:text-base
+                                        focus:border-emerald-500 focus:ring-emerald-500"
+                                    type="text" name="employee_number" :value="old('employee_number')" required autofocus
+                                    inputmode="numeric" maxlength="5" autocomplete="off"
+                                    placeholder="Masukkan 5 digit nomor karyawan" />
+                            </div>
 
-                            <x-input-error :messages="$errors->get('email')" class="mt-1" />
+                            <x-input-error :messages="$errors->get('employee_number')" class="mt-1" />
 
+                            <p class="mt-1 text-xs text-slate-500">
+                                Nomor karyawan terdiri dari tepat 5 angka.
+                            </p>
                         </div>
 
 
                         {{-- Password --}}
                         <div>
-
                             <x-input-label for="password" value="Password"
                                 class="text-slate-700 font-semibold text-sm" />
 
-                            <x-text-input id="password"
-                                class="block mt-1.5 w-full px-4 py-3
-                                       rounded-xl border-slate-300
-                                       text-base
-                                       focus:border-emerald-500
-                                       focus:ring-emerald-500"
-                                type="password" name="password" required autocomplete="current-password"
-                                placeholder="Masukkan password Anda" />
+                            <div class="relative mt-1.5">
+                                {{-- Ikon gembok --}}
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <rect x="4" y="10" width="16" height="11" rx="2"
+                                            stroke-width="1.8" />
+                                        <path d="M8 10V7a4 4 0 0 1 8 0v3" stroke-width="1.8" stroke-linecap="round" />
+                                        <circle cx="12" cy="15" r="1" stroke-width="1.8" />
+                                        <path d="M12 16v2" stroke-width="1.8" stroke-linecap="round" />
+                                    </svg>
+                                </div>
+
+                                <x-text-input id="password"
+                                    class="block w-full !pl-11 !pr-12 py-3 rounded-xl
+                                        border-slate-300 text-lg placeholder:text-base
+                                        focus:border-emerald-500 focus:ring-emerald-500"
+                                    type="password" name="password" required autocomplete="current-password"
+                                    placeholder="Masukkan password Anda" />
+
+                                {{-- Tombol tampil/sembunyikan password --}}
+                                <button type="button" id="togglePassword"
+                                    class="absolute inset-y-0 right-0 flex items-center
+                   px-3.5 text-slate-400 hover:text-emerald-600
+                   focus:outline-none transition"
+                                    aria-label="Tampilkan password" aria-pressed="false" title="Tampilkan password">
+                                    {{-- Ikon mata --}}
+                                    <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" stroke-width="1.8"
+                                            stroke-linejoin="round" />
+                                        <circle cx="12" cy="12" r="3" stroke-width="1.8" />
+                                    </svg>
+
+                                    {{-- Ikon mata dicoret --}}
+                                    <svg id="eyeOffIcon" class="hidden w-5 h-5" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8" stroke-width="1.8"
+                                            stroke-linecap="round" />
+                                        <path
+                                            d="M9.9 5.2A10.7 10.7 0 0 1 12 5c6.4 0 10 7 10 7a16 16 0 0 1-3.1 3.9M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7c1.3 0 2.5-.3 3.6-.8"
+                                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            </div>
 
                             <x-input-error :messages="$errors->get('password')" class="mt-1" />
-
                         </div>
-
 
                         {{-- Remember --}}
                         <div class="flex items-center justify-between">
@@ -295,7 +326,7 @@
                     </form>
 
                     {{-- Register --}}
-                    @if (Route::has('register'))
+                    {{-- @if (Route::has('register'))
                         <div class="mt-4 text-center">
 
                             <p class="text-sm text-slate-500">
@@ -309,7 +340,7 @@
                             </p>
 
                         </div>
-                    @endif
+                    @endif --}}
 
                     {{-- Info --}}
                     <div
@@ -349,6 +380,41 @@
 
     </div>
 
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            const toggleButton = document.getElementById('togglePassword');
+            const eyeIcon = document.getElementById('eyeIcon');
+            const eyeOffIcon = document.getElementById('eyeOffIcon');
+
+            if (!passwordInput || !toggleButton) return;
+
+            toggleButton.addEventListener('click', function() {
+                const isHidden = passwordInput.type === 'password';
+
+                passwordInput.type = isHidden ? 'text' : 'password';
+
+                eyeIcon.classList.toggle('hidden', isHidden);
+                eyeOffIcon.classList.toggle('hidden', !isHidden);
+
+                toggleButton.setAttribute(
+                    'aria-label',
+                    isHidden ? 'Sembunyikan password' : 'Tampilkan password'
+                );
+
+                toggleButton.setAttribute(
+                    'title',
+                    isHidden ? 'Sembunyikan password' : 'Tampilkan password'
+                );
+
+                toggleButton.setAttribute(
+                    'aria-pressed',
+                    isHidden ? 'true' : 'false'
+                );
+            });
+        });
+    </script>
 </body>
 
 </html>

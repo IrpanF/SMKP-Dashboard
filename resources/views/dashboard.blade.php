@@ -1,499 +1,493 @@
-<x-app-layout>
+@section('title', 'SMKP UTSG - Dashboard')
 
+<x-app-layout>
     {{-- CONTENT --}}
     <div class="py-6 bg-slate-50 min-h-[calc(100vh-65px)]">
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="min-h-screen w-full bg-slate-50 p-4 sm:p-6">
+            <div class="w-full">
 
-            {{-- WELCOME --}}
-            <div class="relative overflow-hidden
+                {{-- WELCOME --}}
+                <div
+                    class="relative overflow-hidden
                         bg-gradient-to-r from-emerald-700 to-emerald-500
                         rounded-2xl shadow-sm
                         px-6 py-5 mb-5">
 
-                {{-- Decorative --}}
-                <div class="absolute -right-10 -top-16
+                    {{-- Decorative --}}
+                    <div
+                        class="absolute -right-10 -top-16
                             w-48 h-48 rounded-full
-                            bg-white/10"></div>
+                            bg-white/10">
+                    </div>
 
-                <div class="absolute right-24 -bottom-20
+                    <div
+                        class="absolute right-24 -bottom-20
                             w-40 h-40 rounded-full
-                            bg-white/5"></div>
+                            bg-white/5">
+                    </div>
 
-                <div class="relative z-10">
-                    <p class="text-emerald-100 text-sm">
-                        Selamat datang kembali 👋
-                    </p>
+                    <div class="relative z-10">
+                        <p class="text-emerald-100 text-sm">
+                            Selamat datang kembali 👋
+                        </p>
 
-                    <h1 class="text-2xl font-bold text-white mt-1">
-                        {{ Auth::user()->name }}
-                    </h1>
+                        <h1 class="text-2xl font-bold text-white mt-1">
+                            {{ Auth::user()->name }}
+                        </h1>
 
-                    <p class="text-sm text-emerald-50 mt-1">
-                        Pantau dan kelola keselamatan pertambangan
-                        melalui satu sistem terintegrasi.
-                    </p>
-                </div>
-            </div>
-
-
-            {{-- STAT CARDS --}}
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
-
-                {{-- Total Audit --}}
-                <div class="bg-white rounded-2xl shadow-sm
-                            border border-slate-100 p-5">
-
-                    <div class="flex items-center justify-between">
-
-                        <div>
-                            <p class="text-sm text-slate-500">
-                                Total Audit
-                            </p>
-
-                            <p class="text-3xl font-bold
-                                      text-slate-800 mt-1">
-                                24
-                            </p>
-
-                            <p class="text-xs text-emerald-600 mt-1">
-                                ↑ 12% dari bulan lalu
-                            </p>
-                        </div>
-
-                        <div class="w-11 h-11 rounded-xl
-                                    bg-emerald-100
-                                    flex items-center justify-center">
-
-                            <svg class="w-6 h-6 text-emerald-600"
-                                 fill="none"
-                                 stroke="currentColor"
-                                 viewBox="0 0 24 24">
-
-                                <path stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                      d="M9 5H7a2 2 0 00-2 2v12
-                                         a2 2 0 002 2h10a2 2 0 002-2V7
-                                         a2 2 0 00-2-2h-2
-                                         M9 5a3 3 0 016 0
-                                         M9 5h6"/>
-                            </svg>
-
-                        </div>
+                        <p class="text-sm text-emerald-50 mt-1">
+                            Pantau dan kelola keselamatan pertambangan
+                            melalui satu sistem terintegrasi.
+                        </p>
                     </div>
                 </div>
 
+                {{-- STAT CARDS --}}
+                <div class="grid grid-cols-2 gap-4 mb-5 lg:grid-cols-4">
 
-                {{-- Temuan --}}
-                <div class="bg-white rounded-2xl shadow-sm
-                            border border-slate-100 p-5">
+                    {{-- Total Audit --}}
+                    <div
+                        class="rounded-2xl border border-emerald-100 bg-emerald-50/80 p-5 shadow-sm transition duration-200 hover:shadow-md">
+                        <div class="flex items-center justify-between gap-3">
+                            <div>
+                                <p class="text-sm font-medium text-emerald-700">
+                                    Total Audit
+                                </p>
 
-                    <div class="flex items-center justify-between">
+                                <p class="mt-2 text-3xl font-bold text-emerald-950">
+                                    {{ $totalAudits }}
+                                </p>
 
-                        <div>
-                            <p class="text-sm text-slate-500">
-                                Total Temuan
-                            </p>
+                                <p class="mt-1 text-xs text-emerald-700">
+                                    {{ $completedAudits }} audit selesai
+                                </p>
+                            </div>
 
-                            <p class="text-3xl font-bold
-                                      text-slate-800 mt-1">
-                                86
-                            </p>
-
-                            <p class="text-xs text-red-500 mt-1">
-                                ↑ 8 temuan baru
-                            </p>
-                        </div>
-
-                        <div class="w-11 h-11 rounded-xl
-                                    bg-red-100
-                                    flex items-center justify-center">
-
-                            <svg class="w-6 h-6 text-red-500"
-                                 fill="none"
-                                 stroke="currentColor"
-                                 viewBox="0 0 24 24">
-
-                                <path stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                      d="M12 9v4
-                                         m0 4h.01
-                                         M10.29 3.86l-8.18 14
-                                         A2 2 0 003.84 21h16.32
-                                         a2 2 0 001.73-3.14l-8.18-14
-                                         a2 2 0 00-3.42 0z"/>
-                            </svg>
-
+                            <div
+                                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a3 3 0 016 0M9 5h6" />
+                                </svg>
+                            </div>
                         </div>
                     </div>
+
+                    {{-- Total Temuan --}}
+                    <div
+                        class="rounded-2xl border border-rose-100 bg-rose-50/80 p-5 shadow-sm transition duration-200 hover:shadow-md">
+                        <div class="flex items-center justify-between gap-3">
+                            <div>
+                                <p class="text-sm font-medium text-rose-700">
+                                    Total Temuan
+                                </p>
+
+                                <p class="mt-2 text-3xl font-bold text-rose-950">
+                                    {{ $totalFindings }}
+                                </p>
+
+                                <p class="mt-1 text-xs text-rose-700">
+                                    Temuan audit tercatat
+                                </p>
+                            </div>
+
+                            <div
+                                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-rose-100 text-rose-700">
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v4m0 4h.01M10.29 3.86l-8.18 14A2 2 0 003.84 21h16.32a2 2 0 001.73-3.14l-8.18-14a2 2 0 00-3.42 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Temuan Terbuka --}}
+                    <div
+                        class="rounded-2xl border border-amber-100 bg-amber-50/80 p-5 shadow-sm transition duration-200 hover:shadow-md">
+                        <div class="flex items-center justify-between gap-3">
+                            <div>
+                                <p class="text-sm font-medium text-amber-800">
+                                    Temuan Terbuka
+                                </p>
+
+                                <p class="mt-2 text-3xl font-bold text-amber-950">
+                                    {{ $openFindings }}
+                                </p>
+
+                                <p class="mt-1 text-xs text-amber-800">
+                                    Belum diverifikasi
+                                </p>
+                            </div>
+
+                            <div
+                                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-700">
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Nilai SMKP --}}
+                    <div
+                        class="rounded-2xl border border-blue-100 bg-blue-50/80 p-5 shadow-sm transition duration-200 hover:shadow-md">
+                        <div class="flex items-center justify-between gap-3">
+                            <div>
+                                <p class="text-sm font-medium text-blue-700">
+                                    Nilai SMKP
+                                </p>
+
+                                <p class="mt-2 text-3xl font-bold text-blue-950">
+                                    {{ number_format($overallPercentage, 1, ',', '.') }}%
+                                </p>
+
+                                <p class="mt-1 text-xs text-blue-700">
+                                    {{ $dashboardAudit ? 'Audit selesai terbaru' : 'Belum ada hasil audit' }}
+                                </p>
+                            </div>
+
+                            <div
+                                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-700">
+                                {{-- Ikon grafik batang --}}
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 3v18h18M8 16V9m4 7V5m4 11v-4m4 4V7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
 
-                {{-- Open --}}
-                <div class="bg-white rounded-2xl shadow-sm
-                            border border-slate-100 p-5">
-
-                    <div class="flex items-center justify-between">
-
+                {{-- HASIL AUDIT SMKP --}}
+                <div class="mt-5 bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
                         <div>
-                            <p class="text-sm text-slate-500">
-                                Temuan Terbuka
-                            </p>
-
-                            <p class="text-3xl font-bold
-                                      text-slate-800 mt-1">
-                                32
-                            </p>
-
-                            <p class="text-xs text-amber-600 mt-1">
-                                Perlu tindak lanjut
-                            </p>
-                        </div>
-
-                        <div class="w-11 h-11 rounded-xl
-                                    bg-amber-100
-                                    flex items-center justify-center">
-
-                            <svg class="w-6 h-6 text-amber-600"
-                                 fill="none"
-                                 stroke="currentColor"
-                                 viewBox="0 0 24 24">
-
-                                <path stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                      d="M12 8v4l3 2
-                                         m6-2a9 9 0 11-18 0
-                                         9 9 0 0118 0z"/>
-                            </svg>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                {{-- Score --}}
-                <div class="bg-white rounded-2xl shadow-sm
-                            border border-slate-100 p-5">
-
-                    <div class="flex items-center justify-between">
-
-                        <div>
-                            <p class="text-sm text-slate-500">
-                                Nilai SMKP
-                            </p>
-
-                            <p class="text-3xl font-bold
-                                      text-slate-800 mt-1">
-                                92%
-                            </p>
-
-                            <p class="text-xs text-emerald-600 mt-1">
-                                Sangat Baik
-                            </p>
-                        </div>
-
-                        <div class="w-11 h-11 rounded-xl
-                                    bg-blue-100
-                                    flex items-center justify-center">
-
-                            <svg class="w-6 h-6 text-blue-600"
-                                 fill="none"
-                                 stroke="currentColor"
-                                 viewBox="0 0 24 24">
-
-                                <path stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                      d="M9 19V6l12-3v13
-                                         M9 19a3 3 0 11-6 0
-                                         3 3 0 016 0z
-                                         M21 16a3 3 0 11-6 0
-                                         3 3 0 016 0z"/>
-                            </svg>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-
-            {{-- MAIN GRID --}}
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-
-                {{-- AUDIT OVERVIEW --}}
-                <div class="lg:col-span-2 bg-white rounded-2xl
-                            shadow-sm border border-slate-100 p-5">
-
-                    <div class="flex items-center justify-between mb-5">
-
-                        <div>
-                            <h3 class="font-bold text-slate-800">
-                                Ringkasan Audit
-                            </h3>
+                            <h3 class="font-bold text-slate-800">Hasil Audit SMKP</h3>
 
                             <p class="text-xs text-slate-500 mt-1">
-                                Aktivitas audit tahun berjalan
+                                Pilih audit untuk melihat nilai, grafik, dan rincian hasilnya.
                             </p>
                         </div>
 
-                        <button
-                            class="text-sm font-semibold
-                                   text-emerald-600
-                                   hover:text-emerald-700">
-                            Lihat detail →
-                        </button>
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            {{-- PILIH AUDIT --}}
+                            <form action="{{ route('dashboard') }}" method="GET" class="w-full sm:w-auto">
+                                <select name="audit_id" onchange="this.form.submit()"
+                                    class="w-full sm:w-[420px] rounded-xl border border-emerald-300
+               bg-white px-4 py-3 text-sm text-slate-700
+               shadow-sm transition
+               hover:border-emerald-500
+               focus:border-emerald-600 focus:outline-none
+               focus:ring-4 focus:ring-emerald-100"
+                                    {{ $availableAudits->isEmpty() ? 'disabled' : '' }}>
 
-                    </div>
+                                    @forelse ($availableAudits as $auditOption)
+                                        <option value="{{ $auditOption->id }}" @selected($dashboardAudit && $dashboardAudit->id === $auditOption->id)>
+                                            {{ $auditOption->title }}
+                                            — {{ $auditOption->audit_date?->format('d/m/Y') ?? '-' }}
+                                        </option>
+                                    @empty
+                                        <option value="">Belum ada audit selesai</option>
+                                    @endforelse
+                                </select>
+                            </form>
 
-
-                    {{-- Fake Chart --}}
-                    <div class="h-48 flex items-end gap-3
-                                border-b border-slate-100
-                                px-2">
-
-                        @foreach ([45, 65, 50, 78, 62, 88, 72, 95, 80, 90, 76, 100] as $height)
-
-                            <div class="flex-1 flex flex-col
-                                        items-center justify-end
-                                        h-full">
-
-                                <div
-                                    class="w-full max-w-[34px]
-                                           bg-emerald-500
-                                           rounded-t-lg
-                                           hover:bg-emerald-600
-                                           transition"
-                                    style="height: {{ $height }}%;"
-                                ></div>
-
-                            </div>
-
-                        @endforeach
-
-                    </div>
-
-
-                    <div class="grid grid-cols-6
-                                sm:grid-cols-12
-                                mt-3 text-[11px]
-                                text-slate-400 text-center">
-
-                        @foreach (['Jan','Feb','Mar','Apr','Mei','Jun',
-                                  'Jul','Agu','Sep','Okt','Nov','Des'] as $month)
-
-                            <span>{{ $month }}</span>
-
-                        @endforeach
-
-                    </div>
-
-                </div>
-
-
-                {{-- STATUS TEMUAN --}}
-                <div class="bg-white rounded-2xl
-                            shadow-sm border border-slate-100 p-5">
-
-                    <div class="mb-5">
-                        <h3 class="font-bold text-slate-800">
-                            Status Temuan
-                        </h3>
-
-                        <p class="text-xs text-slate-500 mt-1">
-                            Kondisi temuan saat ini
-                        </p>
-                    </div>
-
-
-                    {{-- Progress --}}
-                    <div class="space-y-5">
-
-                        {{-- Closed --}}
-                        <div>
-                            <div class="flex justify-between
-                                        text-sm mb-2">
-
-                                <span class="text-slate-600">
-                                    Closed
-                                </span>
-
-                                <span class="font-semibold
-                                             text-emerald-600">
-                                    63%
-                                </span>
-
-                            </div>
-
-                            <div class="h-2 rounded-full
-                                        bg-slate-100 overflow-hidden">
-
-                                <div class="h-full w-[63%]
-                                            bg-emerald-500 rounded-full">
-                                </div>
-
-                            </div>
+                            {{-- LIHAT DETAIL AUDIT --}}
+                            @if ($dashboardAudit)
+                                <a href="{{ route('audit.result', $dashboardAudit) }}"
+                                    class="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700">
+                                    Lihat Detail Audit →
+                                </a>
+                            @endif
                         </div>
-
-
-                        {{-- Open --}}
-                        <div>
-                            <div class="flex justify-between
-                                        text-sm mb-2">
-
-                                <span class="text-slate-600">
-                                    Open
-                                </span>
-
-                                <span class="font-semibold
-                                             text-amber-600">
-                                    27%
-                                </span>
-
-                            </div>
-
-                            <div class="h-2 rounded-full
-                                        bg-slate-100 overflow-hidden">
-
-                                <div class="h-full w-[27%]
-                                            bg-amber-500 rounded-full">
-                                </div>
-
-                            </div>
-                        </div>
-
-
-                        {{-- Overdue --}}
-                        <div>
-                            <div class="flex justify-between
-                                        text-sm mb-2">
-
-                                <span class="text-slate-600">
-                                    Terlambat
-                                </span>
-
-                                <span class="font-semibold
-                                             text-red-500">
-                                    10%
-                                </span>
-
-                            </div>
-
-                            <div class="h-2 rounded-full
-                                        bg-slate-100 overflow-hidden">
-
-                                <div class="h-full w-[10%]
-                                            bg-red-500 rounded-full">
-                                </div>
-
-                            </div>
-                        </div>
-
                     </div>
 
+                    @if ($dashboardAudit)
+                        <div class="rounded-xl bg-emerald-50 border border-emerald-100 p-4">
+                            <p class="text-sm text-emerald-700">Nilai Keseluruhan</p>
 
-                    {{-- Total --}}
-                    <div class="mt-6 pt-5
-                                border-t border-slate-100
-                                flex items-center justify-between">
-
-                        <span class="text-sm text-slate-500">
-                            Total Temuan
-                        </span>
-
-                        <span class="text-xl font-bold text-slate-800">
-                            86
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            {{-- QUICK ACCESS --}}
-            <div class="mt-5">
-
-                <div class="flex items-center justify-between mb-3">
-
-                    <div>
-                        <h3 class="font-bold text-slate-800">
-                            Akses Cepat
-                        </h3>
-
-                        <p class="text-xs text-slate-500">
-                            Menu yang sering digunakan
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="grid grid-cols-2
-                            sm:grid-cols-3
-                            lg:grid-cols-6 gap-3">
-
-                    @foreach ([
-                        ['Audit SMKP', 'bg-emerald-100', 'text-emerald-600'],
-                        ['Temuan', 'bg-red-100', 'text-red-500'],
-                        ['Tindak Lanjut', 'bg-amber-100', 'text-amber-600'],
-                        ['Laporan', 'bg-blue-100', 'text-blue-600'],
-                        ['Master Data', 'bg-purple-100', 'text-purple-600'],
-                        ['Pengguna', 'bg-slate-100', 'text-slate-600'],
-                    ] as $menu)
-
-                        <a href="#"
-                           class="bg-white rounded-xl
-                                  border border-slate-100
-                                  shadow-sm p-4
-                                  hover:shadow-md
-                                  hover:-translate-y-0.5
-                                  transition duration-200">
-
-                            <div class="w-10 h-10 rounded-lg
-                                        {{ $menu[1] }}
-                                        flex items-center justify-center
-                                        mb-3">
-
-                                <svg class="w-5 h-5 {{ $menu[2] }}"
-                                     fill="none"
-                                     stroke="currentColor"
-                                     viewBox="0 0 24 24">
-
-                                    <path stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          stroke-width="2"
-                                          d="M9 12h6
-                                             m-6 4h6
-                                             m2 5H7
-                                             a2 2 0 01-2-2V5
-                                             a2 2 0 012-2h5.586
-                                             a1 1 0 01.707.293l5.414 5.414
-                                             A1 1 0 0119 9.414V19
-                                             a2 2 0 01-2 2z"/>
-                                </svg>
-
-                            </div>
-
-                            <p class="text-sm font-semibold
-                                      text-slate-700">
-                                {{ $menu[0] }}
+                            <p class="text-3xl font-bold text-emerald-800 mt-1">
+                                {{ number_format($overallPercentage, 2, ',', '.') }}%
                             </p>
 
-                        </a>
+                            <p class="text-xs text-emerald-700 mt-2">
+                                {{ $totalPoints }} dari 339 poin
+                            </p>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-6">
 
-                    @endforeach
+                            {{-- Chart Perbandingan: 2 bagian --}}
+                            <div class="lg:col-span-2 rounded-xl border border-slate-100 p-4">
+                                <h4 class="font-semibold text-slate-700">
+                                    Perbandingan Nilai Maksimal dan Hasil Audit
+                                </h4>
 
+                                <p class="text-xs text-slate-500 mt-1 mb-4">
+                                    Persentase pencapaian untuk setiap elemen SMKP
+                                </p>
+
+                                <div class="relative h-[420px]">
+                                    <canvas id="smkpComparisonChart"></canvas>
+                                </div>
+                            </div>
+
+                            {{-- Radar Chart: 3 bagian, lebih lebar --}}
+                            <div class="lg:col-span-3 rounded-xl border border-slate-100 p-4">
+                                <h4 class="font-semibold text-slate-700 mb-3">
+                                    Radar Pencapaian Elemen SMKP
+                                </h4>
+
+                                <div class="relative h-[420px]">
+                                    <canvas id="smkpRadarChart"></canvas>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        @php
+                            $elementWeights = [10, 15, 17, 35, 15, 3, 5];
+                        @endphp
+
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm">
+
+                                <thead>
+                                    <tr class="border-b border-slate-200 bg-slate-100 text-left text-slate-600">
+                                        <th class="px-4 py-3 font-semibold">Elemen SMKP</th>
+                                        <th class="px-4 py-3 text-right font-semibold">Poin Audit</th>
+                                        <th class="px-4 py-3 text-right font-semibold">Bobot Elemen</th>
+                                        <th class="px-4 py-3 text-right font-semibold">Pencapaian Bobot</th>
+                                        <th class="px-4 py-3 text-right font-semibold">Nilai terhadap Bobot</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="divide-y divide-slate-200">
+                                    @foreach ($elementResults as $result)
+                                        @php
+                                            $weight = $elementWeights[$loop->index] ?? 0;
+
+                                            $achievementPercentage =
+                                                $result->weight_percentage > 0
+                                                    ? ($result->contribution_percentage / $result->weight_percentage) *
+                                                        100
+                                                    : 0;
+                                        @endphp
+
+                                        <tr
+                                            class="{{ $loop->even ? 'bg-slate-50' : 'bg-white' }} transition-colors hover:bg-blue-50">
+                                            <td class="px-4 py-3 text-slate-700">
+                                                {{ $result->element->name }}
+                                            </td>
+
+                                            <td class="px-4 py-3 text-right font-semibold text-slate-800">
+                                                {{ $result->points }} / {{ $result->max_points }} poin
+                                            </td>
+
+                                            <td class="px-4 py-3 text-right text-slate-600">
+                                                {{ number_format($result->weight_percentage, 2, ',', '.') }}%
+                                            </td>
+
+                                            {{-- PENCAPAIAN BOBOT --}}
+                                            <td class="px-4 py-3 text-right">
+                                                <div class="font-bold text-blue-700">
+                                                    {{ number_format($achievementPercentage, 2, ',', '.') }}%
+                                                </div>
+
+                                                <div class="mt-1 text-xs text-slate-500">
+                                                    dari 100%
+                                                </div>
+                                            </td>
+
+                                            {{-- NILAI TERHADAP BOBOT --}}
+                                            <td class="px-4 py-3 text-right">
+                                                <div class="font-bold text-emerald-700">
+                                                    {{ number_format($result->contribution_percentage, 2, ',', '.') }}%
+                                                </div>
+
+                                                <div class="mt-1 text-xs text-slate-500">
+                                                    Nilai:
+                                                    {{ number_format($result->contribution_percentage, 2, ',', '.') }}
+                                                    /
+                                                    {{ number_format($result->weight_percentage, 2, ',', '.') }}%
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+
+                                <tfoot>
+                                    <tr class="border-t-2 border-slate-200 bg-slate-100">
+                                        <td colspan="4" class="px-4 py-4 text-left font-bold text-slate-800">
+                                            Total
+                                        </td>
+
+                                        <td class="px-4 py-4 text-right font-bold text-emerald-700">
+                                            {{ number_format($overallPercentage, 2, ',', '.') }}%
+                                        </td>
+                                    </tr>
+                                </tfoot>
+
+                            </table>
+                        </div>
+                    @else
+                        <div class="rounded-xl border border-dashed border-slate-300 p-8 text-center">
+                            <p class="font-semibold text-slate-700">Belum ada hasil audit selesai</p>
+                            <p class="text-sm text-slate-500 mt-1">
+                                Hasil tabel dan radar chart akan muncul setelah audit diselesaikan.
+                            </p>
+                            <a href="{{ route('audit.index') }}"
+                                class="inline-flex mt-4 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700">
+                                Buka Daftar Audit
+                            </a>
+                        </div>
+                    @endif
                 </div>
-
             </div>
 
         </div>
-
     </div>
 
+    @if ($dashboardAudit)
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const canvas = document.getElementById('smkpRadarChart');
+
+                if (!canvas || typeof Chart === 'undefined') return;
+
+                new Chart(canvas, {
+                    type: 'radar',
+
+                    data: {
+                        labels: @json($elementResults->map(fn($result) => $result->element->name)->values()),
+
+                        datasets: [{
+                            label: 'Pencapaian Elemen (%)',
+                            data: @json($elementResults->pluck('percentage')->values()),
+                            fill: true,
+                            borderWidth: 2,
+                            pointRadius: 4
+                        }]
+                    },
+
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                min: 0,
+                                max: 100,
+
+                                ticks: {
+                                    stepSize: 20,
+                                    callback: value => value + '%'
+                                }
+                            }
+                        },
+
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const canvas = document.getElementById('smkpComparisonChart');
+
+                if (!canvas || typeof Chart === 'undefined') return;
+
+                new Chart(canvas, {
+                    type: 'bar',
+
+                    data: {
+                        labels: @json($elementResults->map(fn($result) => $result->element->name)->values()),
+
+                        datasets: [{
+                                label: 'Nilai Maksimal',
+                                data: @json($elementResults->map(fn($result) => $result->max_points > 0 ? 100 : 0)->values()),
+                                backgroundColor: '#CBD5E1',
+                                borderRadius: 5
+                            },
+                            {
+                                label: 'Hasil Audit',
+                                data: @json($elementResults->pluck('percentage')->values()),
+                                backgroundColor: '#059669',
+                                borderRadius: 5
+                            }
+                        ]
+                    },
+
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    font: {
+                                        size: 10
+                                    },
+                                    callback: value => value + '%'
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Persentase Pencapaian',
+                                    font: {
+                                        size: 11
+                                    }
+                                }
+                            },
+
+                            y: {
+                                ticks: {
+                                    autoSkip: false,
+                                    font: {
+                                        size: 9
+                                    }
+                                }
+                            }
+                        },
+
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: {
+                                        size: 10
+                                    },
+                                    boxWidth: 12,
+                                    padding: 12
+                                }
+                            },
+
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.dataset.label + ': ' +
+                                            Number(context.raw).toLocaleString('id-ID', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) + '%';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+    @endif
 </x-app-layout>

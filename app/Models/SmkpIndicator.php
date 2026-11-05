@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SmkpIndicator extends Model
 {
@@ -21,5 +22,10 @@ class SmkpIndicator extends Model
     public function criteria(): BelongsTo
     {
         return $this->belongsTo(SmkpCriteria::class, 'smkp_criteria_id');
+    }
+
+    public function rubrics(): HasMany
+    {
+        return $this->hasMany(SmkpIndicatorRubric::class);
     }
 }

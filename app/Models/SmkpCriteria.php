@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class SmkpCriteria extends Model
 {
     protected $table = 'smkp_criteria';
-    
+
     protected $fillable = [
         'smkp_element_id',
         'parent_id',
@@ -18,6 +18,7 @@ class SmkpCriteria extends Model
         'description',
         'sort_order',
         'is_active',
+        'max_score',
     ];
 
     protected $casts = [
@@ -42,5 +43,18 @@ class SmkpCriteria extends Model
     public function indicators(): HasMany
     {
         return $this->hasMany(SmkpIndicator::class);
+    }
+
+    public function auditAssessments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(AuditAssessment::class, 'smkp_criteria_id');
+    }
+
+    public function rubrics(): HasMany
+    {
+        return $this->hasMany(
+            SmkpCriteriaRubric::class,
+            'smkp_criteria_id'
+        )->orderBy('sort_order');
     }
 }

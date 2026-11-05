@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Lupa Password - SMKP Dashboard</title>
+    <title>{{ config('app.name', 'Sistem Informasi SMKP') }} - Lupa Password</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('logo-utsg.ico') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

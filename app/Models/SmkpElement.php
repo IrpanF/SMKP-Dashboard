@@ -21,7 +21,6 @@ class SmkpElement extends Model
     public function criteria(): HasMany
     {
         return $this->hasMany(SmkpCriteria::class, 'smkp_element_id')
-            ->whereNull('parent_id')
-            ->orderBy('sort_order');
+            ->whereNull('parent_id');
     }
 }

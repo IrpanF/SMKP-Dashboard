@@ -5,7 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ config('app.name', 'SMKP Dashboard') }}</title>
+    {{-- <title>{{ config('app.name', 'Sistem Informasi SMKP') }} - Login</title>
+    <title>{{ config('app.name', 'SMKP Dashboard') }}</title> --}}
+    <title>@yield('title', 'SMKP UTSG')</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('logo-utsg.ico') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -17,10 +20,7 @@
 
         </div>
 
-        {{-- ========================================= --}}
         {{-- SIDEBAR --}}
-        {{-- ========================================= --}}
-
         <aside id="app-sidebar"
             class="fixed inset-y-0 left-0 z-50 flex w-64
             -translate-x-full flex-col
@@ -54,7 +54,6 @@
 
             </div>
 
-
             {{-- MENU --}}
             <nav class="flex-1 px-4 py-5 overflow-y-auto">
 
@@ -66,8 +65,7 @@
                 </p>
 
                 <a href="{{ route('dashboard') }}"
-                    class="flex items-center gap-3 px-3 py-2.5 mb-1
-                          rounded-xl
+                    class="flex items-center gap-3 px-3 py-2.5 mb-1 rounded-xl
                           {{ request()->routeIs('dashboard')
                               ? 'bg-emerald-50 text-emerald-700'
                               : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}
@@ -86,38 +84,31 @@
 
                 </a>
 
+                {{-- AUDIT SMKP --}}
+                <a href="{{ route('audit.index') }}"
+                    class="flex items-center gap-3 px-3 py-2.5 mb-1 rounded-xl transition
+                        {{ request()->routeIs('audit.*')
+                            ? 'bg-emerald-50 text-emerald-700'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
 
-                {{-- AUDIT --}}
-                <a href="#"
-                    class="flex items-center gap-3 px-3 py-2.5 mb-1
-                          rounded-xl text-slate-600
-                          hover:bg-slate-50
-                          hover:text-emerald-600
-                          transition">
-
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
+                    {{-- SVG ICON --}}
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12
-                                 a2 2 0 002 2h10a2 2 0 002-2V7
-                                 a2 2 0 00-2-2h-2
-                                 M9 5a3 3 0 016 0
-                                 M9 5h6" />
+                            a2 2 0 002 2h10a2 2 0 002-2V7
+                            a2 2 0 00-2-2h-2
+                            M9 5a3 3 0 016 0
+                            M9 5h6" />
                     </svg>
 
-                    <span class="text-sm font-medium">
-                        Audit SMKP
-                    </span>
-
+                    <span class="text-sm font-medium">Audit SMKP</span>
                 </a>
 
-
                 {{-- TEMUAN --}}
-                <a href="#"
-                    class="flex items-center gap-3 px-3 py-2.5 mb-1
-                          rounded-xl text-slate-600
-                          hover:bg-slate-50
-                          hover:text-emerald-600
-                          transition">
+                <a href="{{ route('findings.index') }}"
+                    class="flex items-center gap-3 rounded-xl px-3 py-2.5 mb-1 transition
+                        {{ request()->routeIs('findings.*')
+                            ? 'bg-emerald-50 text-emerald-700'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
 
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 
@@ -135,20 +126,16 @@
 
                 </a>
 
-
                 {{-- TINDAK LANJUT --}}
-                <a href="#"
-                    class="flex items-center gap-3 px-3 py-2.5 mb-1
-                          rounded-xl text-slate-600
-                          hover:bg-slate-50
-                          hover:text-emerald-600
-                          transition">
-
+                <a href="{{ route('rtl.index') }}"
+                    class="flex items-center gap-3 px-3 py-2.5 mb-1 rounded-xl transition
+                        {{ request()->routeIs('rtl.*')
+                            ? 'bg-emerald-50 text-emerald-700'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2
-                                 m6-2a9 9 0 11-18 0
-                                 9 9 0 0118 0z" />
+                            m6-2a9 9 0 11-18 0
+                            9 9 0 0118 0z" />
                     </svg>
 
                     <span class="text-sm font-medium">
@@ -157,31 +144,44 @@
 
                 </a>
 
+                {{-- VERIFIKASI TEMUAN --}}
+                @auth
+                    @if (in_array(auth()->user()->role, ['auditor', 'admin']))
+                        <a href="{{ route('verification.index') }}"
+                            class="flex items-center gap-3 px-3 py-2.5 mb-1 rounded-xl transition
+                                {{ request()->routeIs('verification.*')
+                                    ? 'bg-emerald-50 text-emerald-700'
+                                    : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
+
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4
+                                                            M12 3l7 4v5
+                                                            a8 8 0 01-7 8
+                                                            a8 8 0 01-7-8V7l7-4z" />
+                            </svg>
+
+                            <span class="text-sm font-medium">
+                                Verifikasi Temuan
+                            </span>
+
+                        </a>
+                    @endif
+                @endauth
 
                 {{-- LAPORAN --}}
-                <a href="#"
-                    class="flex items-center gap-3 px-3 py-2.5 mb-1
-                          rounded-xl text-slate-600
-                          hover:bg-slate-50
-                          hover:text-emerald-600
-                          transition">
-
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2
-                                 a2 2 0 012-2h2a2 2 0 012 2v2
-                                 M9 17H5a2 2 0 01-2-2V7
-                                 a2 2 0 012-2h14a2 2 0 012 2v8
-                                 a2 2 0 01-2 2h-4
-                                 M9 17v4h6v-4" />
+                <a href="{{ route('laporan.index') }}"
+                    class="flex items-center gap-3 px-3 py-2.5 mb-1 rounded-xl transition
+                        {{ request()->routeIs('laporan.*')
+                            ? 'bg-emerald-50 text-emerald-700'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 3h7l5 5v13H4V3h4zm7 0v5h5M8 13h8M8 17h8" />
                     </svg>
-
                     <span class="text-sm font-medium">
                         Laporan
                     </span>
-
                 </a>
-
 
                 {{-- MASTER DATA --}}
                 <div class="mt-6 mb-2">
@@ -194,20 +194,18 @@
 
                 </div>
 
-
-
                 {{-- MASTER DATA SMKP --}}
                 <a href="{{ route('master-data.smkp') }}"
                     class="flex items-center gap-3 px-3 py-2.5 mb-1
-        rounded-xl transition
-        {{ request()->routeIs('master-data.smkp')
-            ? 'bg-emerald-50 text-emerald-700'
-            : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
+                        rounded-xl transition
+                        {{ request()->routeIs('master-data.smkp')
+                            ? 'bg-emerald-50 text-emerald-700'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
 
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v14
-            a1 1 0 01-1 1H5a1 1 0 01-1-1V5z
-            M8 8h8M8 12h8M8 16h5" />
+                            a1 1 0 01-1 1H5a1 1 0 01-1-1V5z
+                            M8 8h8M8 12h8M8 16h5" />
                     </svg>
 
                     <span class="text-sm font-medium">
@@ -216,7 +214,7 @@
                 </a>
 
                 {{-- DEPARTEMEN --}}
-                <a href="#"
+                {{-- <a href="#"
                     class="flex items-center gap-3 px-3 py-2.5 mb-1
                           rounded-xl text-slate-600
                           hover:bg-slate-50
@@ -241,66 +239,61 @@
                         Departemen
                     </span>
 
-                </a>
+                </a> --}}
 
+                {{-- LOKASI SITE UTSG --}}
+                {{-- @auth
+                    @if (in_array(auth()->user()->role, ['auditor', 'admin']))
+                        <a href="{{ route('sites.map') }}"
+                            class="flex items-center gap-3 px-3 py-2.5 mb-1
+                                rounded-xl
+                                {{ request()->routeIs('sites.map')
+                                    ? 'bg-emerald-50 text-emerald-700'
+                                    : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}
+                                transition">
 
-                {{-- LOKASI --}}
-                <a href="#"
-                    class="flex items-center gap-3 px-3 py-2.5 mb-1
-                          rounded-xl text-slate-600
-                          hover:bg-slate-50
-                          hover:text-emerald-600
-                          transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 21
+                                                     a2 2 0 01-2.828 0l-4.243-4.343
+                                                     a8 8 0 1111.314 0z
+                                                     M15 11a3 3 0 11-6 0
+                                                     3 3 0 016 0z" />
+                            </svg>
 
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 21
-                                 a2 2 0 01-2.828 0l-4.243-4.343
-                                 a8 8 0 1111.314 0z
-                                 M15 11a3 3 0 11-6 0
-                                 3 3 0 016 0z" />
-                    </svg>
-
-                    <span class="text-sm font-medium">
-                        Lokasi
-                    </span>
-
-                </a>
-
+                            <span class="text-sm font-medium">
+                                Lokasi Site
+                            </span>
+                        </a>
+                    @endif
+                @endauth --}}
 
                 {{-- PENGGUNA --}}
-                <a href="#"
-                    class="flex items-center gap-3 px-3 py-2.5 mb-1
-                          rounded-xl text-slate-600
-                          hover:bg-slate-50
-                          hover:text-emerald-600
-                          transition">
-
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0
-                                 4 4 0 018 0z
-                                 M12 14a7 7 0 00-7 7h14
-                                 a7 7 0 00-7-7z" />
-                    </svg>
-
-                    <span class="text-sm font-medium">
-                        Pengguna
-                    </span>
-
-                </a>
+                @if (auth()->check() && auth()->user()->role === 'admin')
+                    <a href="{{ route('users.index') }}"
+                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm mb-1 transition
+                            {{ request()->routeIs('users.*')
+                                ? 'bg-emerald-50 text-emerald-700'
+                                : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="10" cy="7" r="4" />
+                            <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                        <span class="text-sm font-medium">
+                            Users
+                        </span>
+                    </a>
+                @endif
 
             </nav>
 
         </aside>
 
-
-        {{-- ========================================= --}}
         {{-- MAIN CONTENT --}}
-        {{-- ========================================= --}}
-
         <div class="min-w-0 flex-1">
-
             {{-- TOP NAVBAR --}}
             <header
                 class="relative z-30 sticky top-0 flex h-20 items-center gap-4
@@ -447,6 +440,7 @@
                         </div>
                     </div>
                 </div>
+                @stack('styles')
             </header>
 
             {{-- PAGE HEADER MOBILE --}}
@@ -458,7 +452,6 @@
 
                 </div>
             @endisset
-
 
             {{-- PAGE CONTENT --}}
             <main>
@@ -567,6 +560,7 @@
             });
         });
     </script>
+    @stack('scripts')
 </body>
 
 </html>
